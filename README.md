@@ -1,73 +1,95 @@
-*Multi Tools Shell* Version 1.0
-
-Esta ferramenta de suporte, desenvolvida em PowerShell, foi criada para agilizar e simplificar tarefas comuns de diagnóstico e 
-manutenção de sistemas Windows. Com uma interface de linha de comando intuitiva, ela consolida várias funcionalidades essenciais
-para técnicos e usuários avançados, desde a verificação de rede até a otimização de desempenho.
+*Multi Tools Shell* - Versão 1.0
+Esta ferramenta, desenvolvida em PowerShell, foi projetada para simplificar e acelerar o diagnóstico e a manutenção de sistemas Windows. Com uma interface de linha de comando intuitiva, ela consolida várias funcionalidades essenciais para técnicos e usuários avançados, tornando o gerenciamento de sistemas mais eficiente.
 
 Módulos e Funcionalidades
-A ferramenta é organizada em categorias principais, cada uma contendo um conjunto de recursos para facilitar a navegação e o uso.
+A ferramenta é organizada em categorias principais, cada uma com um conjunto de recursos para facilitar a navegação e o uso.
 
-Análise de Rede: Recursos para diagnosticar e gerenciar problemas de conectividade.
+Análise de Rede
+Recursos para diagnosticar e gerenciar problemas de conectividade.
 
-Exibe endereços IP e informações da rede.
+Exibe endereços IP local e público.
+
+Mostra a geolocalização do IP público (cidade, região e país).
 
 Executa testes de conectividade.
 
-Redefine configurações TCP/IP para solucionar falhas comuns.
+Redefine configurações de TCP/IP para solucionar falhas comuns.
 
-Informações de Sistema e Hardware: Oferece uma visão rápida da configuração do computador.
+Informações de Sistema e Hardware
+Oferece uma visão rápida da configuração do seu computador.
 
-Apresenta detalhes sobre o sistema operacional e a CPU.
+Apresenta detalhes do sistema operacional e do processador.
 
 Mostra o uso da memória RAM e do espaço em disco.
 
-Segurança e Usuários: Funções para gerenciamento e monitoramento de contas.
+Segurança e Usuários
+Funções básicas para gerenciamento e monitoramento de contas.
 
 Lista usuários locais e seus status.
 
-Verifica atualizações do sistema para garantir a segurança.
+Verifica atualizações do sistema para manter a segurança.
 
-Monitoramento: Ajuda a identificar problemas com base em eventos e desempenho.
+Monitoramento
+Ajuda a identificar problemas com base em eventos e desempenho do sistema.
 
-Exibe eventos recentes do sistema para diagnóstico.
+Exibe eventos recentes do sistema para facilitar o diagnóstico.
 
-Planeja incluir monitoramento em tempo real de processos.
+Permite monitorar o desempenho de processos em tempo real.
 
-Otimização de Desempenho: Rotinas para melhorar a velocidade e a estabilidade do sistema.
+Otimização de Desempenho
+Rotinas para melhorar a velocidade e a estabilidade do sistema.
 
-Limpeza de arquivos temporários, incluindo cache e diretórios de sistema.
+Executa uma limpeza completa de arquivos temporários e cache.
 
-Verificação de integridade do sistema para corrigir arquivos danificados.
+Limpa diretórios de sistema como TEMP e Prefetch.
 
-Ferramentas de Suporte: Funcionalidades avançadas para diagnóstico e relatórios.
+Executa a verificação de integridade do sistema para corrigir arquivos corrompidos.
 
-Oferece diagnósticos detalhados do sistema.
+Ferramentas de Suporte
+Funcionalidades avançadas para diagnóstico e relatórios detalhados.
 
-A documentação planeja a geração de relatórios detalhados em HTML.
+Oferece diagnósticos detalhados de hardware.
+
+Prepara relatórios profissionais em HTML para análise.
 
 Como Utilizar
-A ferramenta foi projetada para ser simples de usar. Siga os passos abaixo para começar.
+A ferramenta foi projetada para ser simples e intuitiva. Siga os passos abaixo para começar a usá-la.
 
-Requisitos Mínimos:
-
-Sistema Operacional: Windows 10/11 ou Windows Server 2016+.
+Pré-requisitos
+Sistema Operacional: Windows 10/11 ou Windows Server 2016 ou superior.
 
 Versão do PowerShell: 5.1 ou superior.
 
-Acesso de Administrador: A ferramenta deve ser executada com privilégios de administrador.
+Privilégios de Administrador: A ferramenta deve ser executada como administrador.
 
-Execução:
+Instalação e Execução
+Faça o download do arquivo MultiToolsShell.ps1.
 
-Faça o download do arquivo MultiToolsShell.ps1
-
-Salve em uma pasta acesse a pasta com o comando `CD`
+Salve-o em uma pasta e navegue até ela usando o comando cd no PowerShell.
 
 Abra o PowerShell como administrador.
 
-Execute o seguinte comando para iniciar a ferramenta: `PowerShell -ExecutionPolicy Bypass -File "MultiToolsShell.ps1"`
+Execute o seguinte comando para iniciar a ferramenta:
+PowerShell -ExecutionPolicy Bypass -File "MultiToolsShell.ps1"
 
-Navegação:
+Navegação
+O menu principal oferece opções por categorias. Basta digitar a letra correspondente para navegar entre os módulos e funcionalidades.
 
-O menu principal oferece opções por categorias.
+R - Rede e Conectividade
 
-Use as letras indicadas (R, S, U, M, O, T, H, X) para navegar entre os módulos e funcionalidades.
+S - Sistema e Hardware
+
+U - Usuários e Segurança
+
+M - Monitoramento e Logs
+
+O - Otimização
+
+T - Ferramentas de Suporte
+
+H - Ajuda
+
+X - Sair
+
+Observações
+Este é um projeto em constante evolução. Novas funcionalidades são adicionadas regularmente e a ferramenta está sujeita a melhorias. Contribuições e feedback da comunidade são bem-vindos para ajudar a refinar e expandir suas capacidades.
