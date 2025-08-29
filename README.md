@@ -1,95 +1,78 @@
-*Multi Tools Shell* - Versão 1.0
-Esta ferramenta, desenvolvida em PowerShell, foi projetada para simplificar e acelerar o diagnóstico e a manutenção de sistemas Windows. Com uma interface de linha de comando intuitiva, ela consolida várias funcionalidades essenciais para técnicos e usuários avançados, tornando o gerenciamento de sistemas mais eficiente.
+UMulti Tools Shell - Versão 2.0
 
+O Multi Tools Shell é uma ferramenta em PowerShell desenvolvida para simplificar e acelerar o diagnóstico e a manutenção de sistemas Windows.
+Com uma interface de linha de comando prática, reúne funcionalidades essenciais para técnicos e usuários avançados, tornando o gerenciamento do sistema mais ágil e centralizado.
+
+A versão 2.0 traz melhorias de estabilidade e novas funções integradas diretamente em seus módulos, mantendo o menu organizado e objetivo.
+
+----------------------------------------------------
 Módulos e Funcionalidades
-A ferramenta é organizada em categorias principais, cada uma com um conjunto de recursos para facilitar a navegação e o uso.
 
 Análise de Rede
-Recursos para diagnosticar e gerenciar problemas de conectividade.
-
-Exibe endereços IP local e público.
-
-Mostra a geolocalização do IP público (cidade, região e país).
-
-Executa testes de conectividade.
-
-Redefine configurações de TCP/IP para solucionar falhas comuns.
+- Exibe endereços IP local e público.
+- Mostra a geolocalização do IP público (cidade, região e país).
+- Executa testes de conectividade (ping, tracert, DNS).
+- Redefine configurações de TCP/IP para corrigir falhas comuns.
+- Novo (2.0): Acesso rápido a ferramentas de rede do Windows (ncpa.cpl e configurações avançadas).
 
 Informações de Sistema e Hardware
-Oferece uma visão rápida da configuração do seu computador.
-
-Apresenta detalhes do sistema operacional e do processador.
-
-Mostra o uso da memória RAM e do espaço em disco.
+- Apresenta detalhes do sistema operacional e do processador.
+- Mostra uso de memória RAM e espaço em disco.
+- Exibe informações de drivers e dispositivos conectados.
+- Novo (2.0): Atalho direto para Gerenciamento de Disco e Gerenciador de Dispositivos.
 
 Segurança e Usuários
-Funções básicas para gerenciamento e monitoramento de contas.
-
-Lista usuários locais e seus status.
-
-Verifica atualizações do sistema para manter a segurança.
+- Lista usuários locais e seus status.
+- Verifica atualizações do sistema.
+- Gerencia contas locais (habilitar/desabilitar).
+- Novo (2.0): Acesso direto ao Editor de Registro.
+- Novo (2.0): Atalho para Gerenciamento de Serviços.
 
 Monitoramento
-Ajuda a identificar problemas com base em eventos e desempenho do sistema.
-
-Exibe eventos recentes do sistema para facilitar o diagnóstico.
-
-Permite monitorar o desempenho de processos em tempo real.
+- Exibe eventos recentes do sistema.
+- Monitora desempenho de processos em tempo real.
+- Gera relatórios de consumo de CPU, RAM e disco.
+- Novo (2.0): Exporta logs de desempenho para análise posterior.
 
 Otimização de Desempenho
-Rotinas para melhorar a velocidade e a estabilidade do sistema.
-
-Executa uma limpeza completa de arquivos temporários e cache.
-
-Limpa diretórios de sistema como TEMP e Prefetch.
-
-Executa a verificação de integridade do sistema para corrigir arquivos corrompidos.
+- Limpa arquivos temporários e cache.
+- Limpa diretórios de sistema como TEMP e Prefetch.
+- Executa verificação de integridade do sistema (SFC/DISM).
+- Novo (2.0): Atalho rápido para Liberador de Espaço em Disco.
 
 Ferramentas de Suporte
-Funcionalidades avançadas para diagnóstico e relatórios detalhados.
+- Executa diagnósticos detalhados de hardware.
+- Prepara relatórios em HTML para análise.
+- Coleta informações para suporte remoto.
+- Novo (2.0): Backup rápido de pastas selecionadas.
+- Novo (2.0): Atualização automática – busca e instala a versão mais recente no GitHub.
 
-Oferece diagnósticos detalhados de hardware.
-
-Prepara relatórios profissionais em HTML para análise.
-
+----------------------------------------------------
 Como Utilizar
-A ferramenta foi projetada para ser simples e intuitiva. Siga os passos abaixo para começar a usá-la.
 
 Pré-requisitos
-Sistema Operacional: Windows 10/11 ou Windows Server 2016 ou superior.
-
-Versão do PowerShell: 5.1 ou superior.
-
-Privilégios de Administrador: A ferramenta deve ser executada como administrador.
+- Sistema Operacional: Windows 10/11 ou Windows Server 2016+.
+- PowerShell: versão 5.1 ou superior.
+- Permissões: executar como Administrador.
 
 Instalação e Execução
-Faça o download do arquivo MultiToolsShell.ps1.
-
-Salve-o em uma pasta e navegue até ela usando o comando cd no PowerShell.
-
-Abra o PowerShell como administrador.
-
-Execute o seguinte comando para iniciar a ferramenta:
-PowerShell -ExecutionPolicy Bypass -File "MultiToolsShell.ps1"
+1. Baixe o arquivo MultiToolsShell.ps1.
+2. Salve em uma pasta e abra o PowerShell como Administrador.
+3. Navegue até a pasta com: cd "C:\caminho\da\pasta"
+4. Execute: PowerShell -ExecutionPolicy Bypass -File "MultiToolsShell.ps1"
 
 Navegação
-O menu principal oferece opções por categorias. Basta digitar a letra correspondente para navegar entre os módulos e funcionalidades.
+- R → Rede e Conectividade
+- S → Sistema e Hardware
+- U → Usuários e Segurança
+- M → Monitoramento e Logs
+- O → Otimização
+- T → Ferramentas de Suporte
+- H → Ajuda
+- X → Sair
 
-R - Rede e Conectividade
-
-S - Sistema e Hardware
-
-U - Usuários e Segurança
-
-M - Monitoramento e Logs
-
-O - Otimização
-
-T - Ferramentas de Suporte
-
-H - Ajuda
-
-X - Sair
-
+----------------------------------------------------
 Observações
-Este é um projeto em constante evolução. Novas funcionalidades são adicionadas regularmente e a ferramenta está sujeita a melhorias. Contribuições e feedback da comunidade são bem-vindos para ajudar a refinar e expandir suas capacidades.
+
+- O projeto está em constante evolução, sujeito a melhorias e otimizações futuras.
+- Contribuições e sugestões são bem-vindas.
