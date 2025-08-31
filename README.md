@@ -1,95 +1,113 @@
-*Multi Tools Shell* - Versão 1.0
-Esta ferramenta, desenvolvida em PowerShell, foi projetada para simplificar e acelerar o diagnóstico e a manutenção de sistemas Windows. Com uma interface de linha de comando intuitiva, ela consolida várias funcionalidades essenciais para técnicos e usuários avançados, tornando o gerenciamento de sistemas mais eficiente.
+# Multi Tools Shell
 
-Módulos e Funcionalidades
-A ferramenta é organizada em categorias principais, cada uma com um conjunto de recursos para facilitar a navegação e o uso.
+🇧🇷 **Descrição (PT-BR)**  
+O **Multi Tools Shell** é uma ferramenta em **PowerShell** desenvolvida para simplificar e acelerar o diagnóstico e a manutenção de sistemas **Windows**.  
+Com uma interface de linha de comando prática e centralizada, reúne funcionalidades essenciais para técnicos e usuários avançados, tornando o gerenciamento do sistema mais ágil e objetivo.  
 
-Análise de Rede
-Recursos para diagnosticar e gerenciar problemas de conectividade.
+A versão **2.0** traz melhorias de estabilidade e diversas funções integradas diretamente em seus módulos, mantendo o menu organizado e funcional.  
 
-Exibe endereços IP local e público.
+---
 
-Mostra a geolocalização do IP público (cidade, região e país).
+## ⚙️ Recursos principais
 
-Executa testes de conectividade.
+### 🔗 Análise de Rede
+- Exibe endereços IP local e público.  
+- Mostra geolocalização do IP público (cidade, região e país).  
+- Executa testes de conectividade (ping, tracert, DNS).  
+- Redefine configurações de TCP/IP.  
+- **Novo (2.0):** Acesso rápido às ferramentas de rede do Windows (`ncpa.cpl` e configurações avançadas).  
 
-Redefine configurações de TCP/IP para solucionar falhas comuns.
+### 💻 Informações de Sistema e Hardware
+- Detalhes do sistema operacional e do processador.  
+- Uso de memória RAM e espaço em disco.  
+- Informações de drivers e dispositivos conectados.  
+- **Novo (2.0):** Atalho para **Gerenciamento de Disco** e **Gerenciador de Dispositivos**.  
 
-Informações de Sistema e Hardware
-Oferece uma visão rápida da configuração do seu computador.
+### 🔐 Segurança e Usuários
+- Lista usuários locais e seus status.  
+- Verifica atualizações do sistema.  
+- Gerencia contas locais (habilitar/desabilitar).  
+- **Novo (2.0):** Acesso ao **Editor de Registro**.  
+- **Novo (2.0):** Atalho para **Gerenciamento de Serviços**.  
 
-Apresenta detalhes do sistema operacional e do processador.
+### 📊 Monitoramento
+- Exibe eventos recentes do sistema.  
+- Monitora desempenho de processos em tempo real.  
+- Gera relatórios de consumo de CPU, RAM e disco.  
+- **Novo (2.0):** Exporta logs de desempenho para análise posterior.  
 
-Mostra o uso da memória RAM e do espaço em disco.
+### 🚀 Otimização de Desempenho
+- Limpa arquivos temporários e cache.  
+- Limpa diretórios de sistema (TEMP, Prefetch).  
+- Executa verificação de integridade do sistema (SFC/DISM).  
+- **Novo (2.0):** Atalho para o **Liberador de Espaço em Disco**.  
 
-Segurança e Usuários
-Funções básicas para gerenciamento e monitoramento de contas.
+### 🛠️ Ferramentas de Suporte
+- Executa diagnósticos detalhados de hardware.  
+- Gera relatórios em HTML para análise.  
+- Coleta informações para suporte remoto.  
+- **Novo (2.0):** Backup rápido de pastas selecionadas.  
+- **Novo (2.0):** Atualização automática – busca e instala a versão mais recente no GitHub.  
 
-Lista usuários locais e seus status.
+---
 
-Verifica atualizações do sistema para manter a segurança.
+## 🖥️ Tecnologias utilizadas
+- **PowerShell 5.1+**  
+- **Windows 10/11 ou Windows Server 2016+**  
 
-Monitoramento
-Ajuda a identificar problemas com base em eventos e desempenho do sistema.
+---
 
-Exibe eventos recentes do sistema para facilitar o diagnóstico.
+## 🎯 Objetivos futuros
+- Adição de suporte para **novos módulos personalizados**.  
+- Melhorias no **relatório em HTML** com interface interativa.  
+- Suporte a execução simplificada via **instalador automatizado**.  
 
-Permite monitorar o desempenho de processos em tempo real.
+---
 
-Otimização de Desempenho
-Rotinas para melhorar a velocidade e a estabilidade do sistema.
+## 🚀 Instalação
 
-Executa uma limpeza completa de arquivos temporários e cache.
+1. Clone este repositório:  
+   ```powershell
+   git clone https://github.com/SEU_USUARIO/Multi-Tools-Shell.git
+   cd Multi-Tools-Shell
+   ```
 
-Limpa diretórios de sistema como TEMP e Prefetch.
+2. Baixe o arquivo `MultiToolsShell.ps1`.  
 
-Executa a verificação de integridade do sistema para corrigir arquivos corrompidos.
+3. Abra o **PowerShell como Administrador**.  
 
-Ferramentas de Suporte
-Funcionalidades avançadas para diagnóstico e relatórios detalhados.
+4. Navegue até a pasta onde está o script:  
+   ```powershell
+   cd "C:\caminho\da\pasta"
+   ```
 
-Oferece diagnósticos detalhados de hardware.
+5. Execute o script:  
+   ```powershell
+   PowerShell -ExecutionPolicy Bypass -File "MultiToolsShell.ps1"
+   ```
 
-Prepara relatórios profissionais em HTML para análise.
+---
 
-Como Utilizar
-A ferramenta foi projetada para ser simples e intuitiva. Siga os passos abaixo para começar a usá-la.
+## ▶️ Uso básico
 
-Pré-requisitos
-Sistema Operacional: Windows 10/11 ou Windows Server 2016 ou superior.
+Menu de navegação principal:  
 
-Versão do PowerShell: 5.1 ou superior.
+- **R** → Rede e Conectividade  
+- **S** → Sistema e Hardware  
+- **U** → Usuários e Segurança  
+- **M** → Monitoramento e Logs  
+- **O** → Otimização  
+- **T** → Ferramentas de Suporte  
+- **H** → Ajuda  
+- **X** → Sair  
 
-Privilégios de Administrador: A ferramenta deve ser executada como administrador.
+---
 
-Instalação e Execução
-Faça o download do arquivo MultiToolsShell.ps1.
+## 📌 Contribuição
+Contribuições são bem-vindas!  
+Abra **issues** ou envie **pull requests** com melhorias ou correções.  
 
-Salve-o em uma pasta e navegue até ela usando o comando cd no PowerShell.
+---
 
-Abra o PowerShell como administrador.
-
-Execute o seguinte comando para iniciar a ferramenta:
-PowerShell -ExecutionPolicy Bypass -File "MultiToolsShell.ps1"
-
-Navegação
-O menu principal oferece opções por categorias. Basta digitar a letra correspondente para navegar entre os módulos e funcionalidades.
-
-R - Rede e Conectividade
-
-S - Sistema e Hardware
-
-U - Usuários e Segurança
-
-M - Monitoramento e Logs
-
-O - Otimização
-
-T - Ferramentas de Suporte
-
-H - Ajuda
-
-X - Sair
-
-Observações
-Este é um projeto em constante evolução. Novas funcionalidades são adicionadas regularmente e a ferramenta está sujeita a melhorias. Contribuições e feedback da comunidade são bem-vindos para ajudar a refinar e expandir suas capacidades.
+**Desenvolvido por Douglas Furlan**  
+🔗 [LinkedIn](https://www.linkedin.com/in/douglasfurlans)  
