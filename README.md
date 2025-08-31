@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Multi Tools Shell
 
 🇧🇷 **Descrição (PT-BR)**  
@@ -69,7 +68,7 @@ A versão **2.0** traz melhorias de estabilidade e diversas funções integradas
 
 1. Clone este repositório:  
    ```powershell
-   git clone https://github.com/SEU_USUARIO/Multi-Tools-Shell.git
+   git clone https://github.com/Mandraquinho/Multi-Tools-Shell
    cd Multi-Tools-Shell
    ```
 
@@ -191,4 +190,3 @@ Observações
 
 - O projeto está em constante evolução, sujeito a melhorias e otimizações futuras.
 - Contribuições e sugestões são bem-vindas.
->>>>>>> ebe51e01803befaccf4c04b51c0dfb3c91cd7985
