@@ -1,20 +1,13 @@
 # ⚙️ Multi Tools Shell v3.0
-
-[![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-blue?logo=powershell)](https://docs.microsoft.com/powershell/) 
+[![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-blue?logo=powershell)](https://docs.microsoft.com/powershell/)
 [![Windows](https://img.shields.io/badge/Windows-10%2F11_or_Server_2016%2B-green?logo=windows)](https://www.microsoft.com/windows/)
-
 ---
-
-🇧🇷 **Descrição (PT-BR)**  
-O **Multi Tools Shell** é uma poderosa ferramenta desenvolvida em **PowerShell** com o objetivo de **simplificar, acelerar e centralizar** atividades de administração em sistemas **Windows**.  
+🇧🇷 **Descrição (PT-BR)**
+O **Multi Tools Shell** é uma poderosa ferramenta desenvolvida em **PowerShell** com o objetivo de **simplificar, acelerar e centralizar** atividades de administração em sistemas **Windows**.
 Com uma **interface interativa de linha de comando**, o projeto foi pensado para técnicos de suporte, analistas de TI e usuários avançados que desejam um painel único com diagnósticos, automações e recursos integrados para manutenção, rede, segurança e performance do sistema.
-
 A versão **3.0** traz melhorias significativas na usabilidade, mais módulos integrados, suporte para atualizações via `winget` e funcionalidades de backup e restauração do sistema.
-
 ---
-
 ## 🔧 Recursos Principais
-
 - Diagnóstico rápido e completo de rede, sistema e hardware
 - Informações detalhadas do computador e do usuário
 - Testes de conectividade e verificação de adaptadores de rede
@@ -25,35 +18,27 @@ A versão **3.0** traz melhorias significativas na usabilidade, mais módulos in
 - Backup de drivers e atualizações automáticas com `winget`
 - Execução de comandos personalizados diretamente do script
 - Tudo acessado por menu de navegação por teclas
-
 ---
-
 ## 🚀 Funcionalidades Detalhadas
-
 ### 🌐 Rede & Conectividade
 - Mostra IP local e IP público com geolocalização
 - `ping`, `tracert`, flush DNS, reset TCP/IP & Winsock
 - Lista adaptadores de rede
-
 ### 💻 Sistema & Hardware
 - Exibe nome do PC, nome do usuário, versão do Windows
 - Detalha CPU, memória RAM total/disponível e espaço em disco
-
 ### 🔐 Usuários & Segurança
 - Lista usuários locais, status (ativo/inativo), último login
 - Acessa `lusrmgr.msc`, ativa/desativa firewall
 - Cria pontos de restauração e exibe status da licença
-
 ### 📝 Monitoramento & Logs
 - Mostra eventos recentes do sistema e logs de aplicativos
-
 ### 🧹 Otimização & Performance
 - Limpeza de:
   - Pastas TEMP e Prefetch
   - Cache do Chrome e Edge
 - Lista programas na inicialização
 - Roda `cleanmgr` para limpeza avançada
-
 ### 🧠 Assistente de Diagnóstico
 - Verifica:
   - Disco (`CHKDSK`)
@@ -63,28 +48,21 @@ A versão **3.0** traz melhorias significativas na usabilidade, mais módulos in
   - Diagnóstico de memória
   - Benchmark de disco (`WinSAT`)
   - Relatório de energia (`powercfg /energy`)
-
 ### 🛠️ Manutenção Avançada
 - Backup de drivers com `pnputil`
 - Atualização de programas via `winget upgrade --all`
 - Execução de comandos customizados (`CMD`)
 - Acesso rápido ao Gerenciador de Tarefas e Restauração do Sistema
-
 ### 📖 Ajuda & Documentação
 - Instruções embutidas por módulo
 - Registro automático de logs
 - Navegação simples e intuitiva
-
 ---
-
 ## 📋 Requisitos
-
 - ✅ **PowerShell 5.1+**
 - ✅ **Windows 10/11 ou Server 2016+**
 - ⚠️ **Executar como Administrador**
-
 ---
-
 ## 🛠️ Instalação & Execução
 
 ```powershell
