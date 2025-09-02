@@ -1,6 +1,8 @@
 # ⚙️ Multi Tools Shell v3.0
 [![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-blue?logo=powershell)](https://docs.microsoft.com/powershell/)
+[![Shell Script](https://img.shields.io/badge/Shell-Bash%20%7C%20Sh-lightgrey?logo=gnu-bash)](https://www.gnu.org/software/bash/)
 [![Windows](https://img.shields.io/badge/Windows-10%2F11_or_Server_2016%2B-green?logo=windows)](https://www.microsoft.com/windows/)
+[![GitHub](https://img.shields.io/badge/GitHub-Version-Control-black?logo=github)](https://github.com/)
 ---
 🇧🇷 **Descrição (PT-BR)**
 O **Multi Tools Shell** é uma poderosa ferramenta desenvolvida em **PowerShell** com o objetivo de **simplificar, acelerar e centralizar** atividades de administração em sistemas **Windows**.
@@ -65,15 +67,15 @@ A versão **3.0** traz melhorias significativas na usabilidade, mais módulos in
 ---
 ## 🛠️ Instalação & Execução
 
-```powershell
+`powershell
 git clone https://github.com/Mandraquinho/Multi-Tools-Shell
 cd Multi-Tools-Shell
 PowerShell -ExecutionPolicy Bypass -File "MultiToolsShell.ps1"
-Ou use o launcher .bat:
+Ou use o launcher .bat:`
 
-➡️ Clique com o botão direito em SysToolsLauncher.bat → Executar como administrador
+`➡️ Clique com o botão direito em SysToolsLauncher.bat → Executar como administrador`
 
-🧭 Navegação por Teclas
+`🧭 Navegação por Teclas
 Tecla	Módulo
 R	Rede & Conectividade
 S	Sistema & Hardware
@@ -83,21 +85,19 @@ O	Otimização & Performance
 D	Assistente de Diagnóstico
 A	Manutenção Avançada
 H	Ajuda & Documentação
-X	Sair
+X	Sair`
 
 🤝 Contribuições
 Contribuições são bem-vindas!
 Abra uma issue ou envie um pull request com melhorias, correções ou novos recursos.
 
-👨‍💻 Créditos
 👨‍🏫 Desenvolvido por: Douglas Furlan
-
 🙋‍ Contribuições: Carlos Augusto
 
 🔗 Links Oficiais
 🧾 Repositório GitHub: github.com/Mandraquinho/Multi-Tools-Shell
+💼 Author’s LinkedIn : https://www.linkedin.com/in/douglasfurlans/
 
-💼 LinkedIn do Autor: Douglas Furlan
 
 🌍 English Version
 🇺🇸 Description (EN)
@@ -127,7 +127,15 @@ Run custom CMD commands directly
 
 All accessible via key-based navigation
 
-🧭 Key Navigation
+`📦 Installation
+bash
+Copiar código
+git clone https://github.com/Mandraquinho/Multi-Tools-Shell
+cd Multi-Tools-Shell
+PowerShell -ExecutionPolicy Bypass -File "MultiToolsShell.ps1"
+Or run the .bat launcher as admin.`
+
+`🧭 Key Navigation
 Key	Module
 R	Network & Connectivity
 S	System & Hardware
@@ -137,22 +145,12 @@ O	Optimization & Performance
 D	Diagnostic Assistant
 A	Advanced Maintenance
 H	Help & Documentation
-X	Exit
-
-📦 Installation
-bash
-Copiar código
-git clone https://github.com/Mandraquinho/Multi-Tools-Shell
-cd Multi-Tools-Shell
-PowerShell -ExecutionPolicy Bypass -File "MultiToolsShell.ps1"
-Or run the .bat launcher as admin.
+X	Exit`
 
 👨‍🏫 Developer: Douglas Furlan
-
 🙋‍ Contributor: Carlos Augusto
 
 🔗 Useful Links
-🌐 GitHub Repo: github.com/Mandraquinho/Multi-Tools-Shell
-
-💼 Author’s LinkedIn: Douglas Furlan
-https://www.linkedin.com/in/douglasfurlans/
+🧾 Repositório GitHub: github.com/Mandraquinho/Multi-Tools-Shell
+💼 Author’s LinkedIn : https://www.linkedin.com/in/douglasfurlans/
+🤝 Contributor LinkedIn : https://www.linkedin.com/in/ysneshy/
