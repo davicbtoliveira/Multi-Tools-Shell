@@ -91,10 +91,13 @@ Contribuições são bem-vindas!
 Abra uma issue ou envie um pull request com melhorias, correções ou novos recursos.
 
 👨‍🏫 Desenvolvido por: Douglas Furlan
+
 🙋‍ Contribuições: Carlos Augusto
 
 🔗 Links Oficiais
+
 🧾 Repositório GitHub: github.com/Mandraquinho/Multi-Tools-Shell
+
 💼 Author’s LinkedIn : https://www.linkedin.com/in/douglasfurlans/
 
 
@@ -147,9 +150,13 @@ H	Help & Documentation
 X	Exit`
 
 👨‍🏫 Developer: Douglas Furlan
+
 🙋‍ Contributor: Carlos Augusto
 
 🔗 Useful Links
+
 🧾 Repositório GitHub: github.com/Mandraquinho/Multi-Tools-Shell
+
 💼 Author’s LinkedIn : https://www.linkedin.com/in/douglasfurlans/
+
 🤝 Contributor LinkedIn : https://www.linkedin.com/in/ysneshy/
