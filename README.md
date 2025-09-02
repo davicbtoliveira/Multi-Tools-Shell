@@ -1,192 +1,180 @@
-# Multi Tools Shell
+# ⚙️ Multi Tools Shell v3.0
+
+[![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-blue?logo=powershell)](https://docs.microsoft.com/powershell/) 
+[![Windows](https://img.shields.io/badge/Windows-10%2F11_or_Server_2016%2B-green?logo=windows)](https://www.microsoft.com/windows/)
+
+---
 
 🇧🇷 **Descrição (PT-BR)**  
-O **Multi Tools Shell** é uma ferramenta em **PowerShell** desenvolvida para simplificar e acelerar o diagnóstico e a manutenção de sistemas **Windows**.  
-Com uma interface de linha de comando prática e centralizada, reúne funcionalidades essenciais para técnicos e usuários avançados, tornando o gerenciamento do sistema mais ágil e objetivo.  
+O **Multi Tools Shell** é uma poderosa ferramenta desenvolvida em **PowerShell** com o objetivo de **simplificar, acelerar e centralizar** atividades de administração em sistemas **Windows**.  
+Com uma **interface interativa de linha de comando**, o projeto foi pensado para técnicos de suporte, analistas de TI e usuários avançados que desejam um painel único com diagnósticos, automações e recursos integrados para manutenção, rede, segurança e performance do sistema.
 
-A versão **2.0** traz melhorias de estabilidade e diversas funções integradas diretamente em seus módulos, mantendo o menu organizado e funcional.  
-
----
-
-## ⚙️ Recursos principais
-
-### 🔗 Análise de Rede
-- Exibe endereços IP local e público.  
-- Mostra geolocalização do IP público (cidade, região e país).  
-- Executa testes de conectividade (ping, tracert, DNS).  
-- Redefine configurações de TCP/IP.  
-- **Novo (2.0):** Acesso rápido às ferramentas de rede do Windows (`ncpa.cpl` e configurações avançadas).  
-
-### 💻 Informações de Sistema e Hardware
-- Detalhes do sistema operacional e do processador.  
-- Uso de memória RAM e espaço em disco.  
-- Informações de drivers e dispositivos conectados.  
-- **Novo (2.0):** Atalho para **Gerenciamento de Disco** e **Gerenciador de Dispositivos**.  
-
-### 🔐 Segurança e Usuários
-- Lista usuários locais e seus status.  
-- Verifica atualizações do sistema.  
-- Gerencia contas locais (habilitar/desabilitar).  
-- **Novo (2.0):** Acesso ao **Editor de Registro**.  
-- **Novo (2.0):** Atalho para **Gerenciamento de Serviços**.  
-
-### 📊 Monitoramento
-- Exibe eventos recentes do sistema.  
-- Monitora desempenho de processos em tempo real.  
-- Gera relatórios de consumo de CPU, RAM e disco.  
-- **Novo (2.0):** Exporta logs de desempenho para análise posterior.  
-
-### 🚀 Otimização de Desempenho
-- Limpa arquivos temporários e cache.  
-- Limpa diretórios de sistema (TEMP, Prefetch).  
-- Executa verificação de integridade do sistema (SFC/DISM).  
-- **Novo (2.0):** Atalho para o **Liberador de Espaço em Disco**.  
-
-### 🛠️ Ferramentas de Suporte
-- Executa diagnósticos detalhados de hardware.  
-- Gera relatórios em HTML para análise.  
-- Coleta informações para suporte remoto.  
-- **Novo (2.0):** Backup rápido de pastas selecionadas.  
-- **Novo (2.0):** Atualização automática – busca e instala a versão mais recente no GitHub.  
+A versão **3.0** traz melhorias significativas na usabilidade, mais módulos integrados, suporte para atualizações via `winget` e funcionalidades de backup e restauração do sistema.
 
 ---
 
-## 🖥️ Tecnologias utilizadas
-- **PowerShell 5.1+**  
-- **Windows 10/11 ou Windows Server 2016+**  
+## 🔧 Recursos Principais
+
+- Diagnóstico rápido e completo de rede, sistema e hardware
+- Informações detalhadas do computador e do usuário
+- Testes de conectividade e verificação de adaptadores de rede
+- Criação de pontos de restauração
+- Limpeza de arquivos temporários e cache de navegadores
+- Logs de eventos do sistema e aplicativos
+- Otimização de inicialização e sistema com `CleanMgr`
+- Backup de drivers e atualizações automáticas com `winget`
+- Execução de comandos personalizados diretamente do script
+- Tudo acessado por menu de navegação por teclas
 
 ---
 
-## 🎯 Objetivos futuros
-- Adição de suporte para **novos módulos personalizados**.  
-- Melhorias no **relatório em HTML** com interface interativa.  
-- Suporte a execução simplificada via **instalador automatizado**.  
+## 🚀 Funcionalidades Detalhadas
+
+### 🌐 Rede & Conectividade
+- Mostra IP local e IP público com geolocalização
+- `ping`, `tracert`, flush DNS, reset TCP/IP & Winsock
+- Lista adaptadores de rede
+
+### 💻 Sistema & Hardware
+- Exibe nome do PC, nome do usuário, versão do Windows
+- Detalha CPU, memória RAM total/disponível e espaço em disco
+
+### 🔐 Usuários & Segurança
+- Lista usuários locais, status (ativo/inativo), último login
+- Acessa `lusrmgr.msc`, ativa/desativa firewall
+- Cria pontos de restauração e exibe status da licença
+
+### 📝 Monitoramento & Logs
+- Mostra eventos recentes do sistema e logs de aplicativos
+
+### 🧹 Otimização & Performance
+- Limpeza de:
+  - Pastas TEMP e Prefetch
+  - Cache do Chrome e Edge
+- Lista programas na inicialização
+- Roda `cleanmgr` para limpeza avançada
+
+### 🧠 Assistente de Diagnóstico
+- Verifica:
+  - Disco (`CHKDSK`)
+  - Sistema (`SFC`)
+  - Imagem do Windows (`DISM`)
+- Roda:
+  - Diagnóstico de memória
+  - Benchmark de disco (`WinSAT`)
+  - Relatório de energia (`powercfg /energy`)
+
+### 🛠️ Manutenção Avançada
+- Backup de drivers com `pnputil`
+- Atualização de programas via `winget upgrade --all`
+- Execução de comandos customizados (`CMD`)
+- Acesso rápido ao Gerenciador de Tarefas e Restauração do Sistema
+
+### 📖 Ajuda & Documentação
+- Instruções embutidas por módulo
+- Registro automático de logs
+- Navegação simples e intuitiva
 
 ---
 
-## 🚀 Instalação
+## 📋 Requisitos
 
-1. Clone este repositório:  
-   ```powershell
-   git clone https://github.com/Mandraquinho/Multi-Tools-Shell
-   cd Multi-Tools-Shell
-   ```
-
-2. Baixe o arquivo `MultiToolsShell.ps1`.  
-
-3. Abra o **PowerShell como Administrador**.  
-
-4. Navegue até a pasta onde está o script:  
-   ```powershell
-   cd "C:\caminho\da\pasta"
-   ```
-
-5. Execute o script:  
-   ```powershell
-   PowerShell -ExecutionPolicy Bypass -File "MultiToolsShell.ps1"
-   ```
+- ✅ **PowerShell 5.1+**
+- ✅ **Windows 10/11 ou Server 2016+**
+- ⚠️ **Executar como Administrador**
 
 ---
 
-## ▶️ Uso básico
+## 🛠️ Instalação & Execução
 
-Menu de navegação principal:  
+```powershell
+git clone https://github.com/Mandraquinho/Multi-Tools-Shell
+cd Multi-Tools-Shell
+PowerShell -ExecutionPolicy Bypass -File "MultiToolsShell.ps1"
+Ou use o launcher .bat:
 
-- **R** → Rede e Conectividade  
-- **S** → Sistema e Hardware  
-- **U** → Usuários e Segurança  
-- **M** → Monitoramento e Logs  
-- **O** → Otimização  
-- **T** → Ferramentas de Suporte  
-- **H** → Ajuda  
-- **X** → Sair  
+➡️ Clique com o botão direito em SysToolsLauncher.bat → Executar como administrador
 
----
+🧭 Navegação por Teclas
+Tecla	Módulo
+R	Rede & Conectividade
+S	Sistema & Hardware
+U	Usuários & Segurança
+M	Monitoramento & Logs
+O	Otimização & Performance
+D	Assistente de Diagnóstico
+A	Manutenção Avançada
+H	Ajuda & Documentação
+X	Sair
 
-## 📌 Contribuição
-Contribuições são bem-vindas!  
-Abra **issues** ou envie **pull requests** com melhorias ou correções.  
+🤝 Contribuições
+Contribuições são bem-vindas!
+Abra uma issue ou envie um pull request com melhorias, correções ou novos recursos.
 
----
+👨‍💻 Créditos
+👨‍🏫 Desenvolvido por: Douglas Furlan
 
-**Desenvolvido por Douglas Furlan**  
-🔗 [LinkedIn](https://www.linkedin.com/in/douglasfurlans)  
-=======
-UMulti Tools Shell - Versão 2.0
+🙋‍ Contribuições: Carlos Augusto
 
-O Multi Tools Shell é uma ferramenta em PowerShell desenvolvida para simplificar e acelerar o diagnóstico e a manutenção de sistemas Windows.
-Com uma interface de linha de comando prática, reúne funcionalidades essenciais para técnicos e usuários avançados, tornando o gerenciamento do sistema mais ágil e centralizado.
+🔗 Links Oficiais
+🧾 Repositório GitHub: github.com/Mandraquinho/Multi-Tools-Shell
 
-A versão 2.0 traz melhorias de estabilidade e novas funções integradas diretamente em seus módulos, mantendo o menu organizado e objetivo.
+💼 LinkedIn do Autor: Douglas Furlan
 
-----------------------------------------------------
-Módulos e Funcionalidades
+🌍 English Version
+🇺🇸 Description (EN)
+Multi Tools Shell is a powerful graphical PowerShell utility designed to simplify, accelerate, and centralize Windows system administration tasks.
+With an interactive command-line menu, it was built for IT technicians, analysts, and power users looking for an all-in-one interface to perform diagnostics, cleanups, maintenance, and performance tuning.
 
-Análise de Rede
-- Exibe endereços IP local e público.
-- Mostra a geolocalização do IP público (cidade, região e país).
-- Executa testes de conectividade (ping, tracert, DNS).
-- Redefine configurações de TCP/IP para corrigir falhas comuns.
-- Novo (2.0): Acesso rápido a ferramentas de rede do Windows (ncpa.cpl e configurações avançadas).
+Version 3.0 introduces major usability improvements, new integrated modules, winget software updating support, and driver backup tools.
 
-Informações de Sistema e Hardware
-- Apresenta detalhes do sistema operacional e do processador.
-- Mostra uso de memória RAM e espaço em disco.
-- Exibe informações de drivers e dispositivos conectados.
-- Novo (2.0): Atalho direto para Gerenciamento de Disco e Gerenciador de Dispositivos.
+🔧 Key Features
+Quick network, system, and hardware diagnostics
 
-Segurança e Usuários
-- Lista usuários locais e seus status.
-- Verifica atualizações do sistema.
-- Gerencia contas locais (habilitar/desabilitar).
-- Novo (2.0): Acesso direto ao Editor de Registro.
-- Novo (2.0): Atalho para Gerenciamento de Serviços.
+Detailed info on the machine and user session
 
-Monitoramento
-- Exibe eventos recentes do sistema.
-- Monitora desempenho de processos em tempo real.
-- Gera relatórios de consumo de CPU, RAM e disco.
-- Novo (2.0): Exporta logs de desempenho para análise posterior.
+Connectivity tests and adapter checks
 
-Otimização de Desempenho
-- Limpa arquivos temporários e cache.
-- Limpa diretórios de sistema como TEMP e Prefetch.
-- Executa verificação de integridade do sistema (SFC/DISM).
-- Novo (2.0): Atalho rápido para Liberador de Espaço em Disco.
+Restore point creation and firewall control
 
-Ferramentas de Suporte
-- Executa diagnósticos detalhados de hardware.
-- Prepara relatórios em HTML para análise.
-- Coleta informações para suporte remoto.
-- Novo (2.0): Backup rápido de pastas selecionadas.
-- Novo (2.0): Atualização automática – busca e instala a versão mais recente no GitHub.
+Temporary files and browser cache cleanup
 
-----------------------------------------------------
-Como Utilizar
+Application and system event logs
 
-Pré-requisitos
-- Sistema Operacional: Windows 10/11 ou Windows Server 2016+.
-- PowerShell: versão 5.1 ou superior.
-- Permissões: executar como Administrador.
+Clean startup list and run CleanMgr utility
 
-Instalação e Execução
-1. Baixe o arquivo MultiToolsShell.ps1.
-2. Salve em uma pasta e abra o PowerShell como Administrador.
-3. Navegue até a pasta com: cd "C:\caminho\da\pasta"
-4. Execute: PowerShell -ExecutionPolicy Bypass -File "MultiToolsShell.ps1"
+Driver backup and bulk updates with winget
 
-Navegação
-- R → Rede e Conectividade
-- S → Sistema e Hardware
-- U → Usuários e Segurança
-- M → Monitoramento e Logs
-- O → Otimização
-- T → Ferramentas de Suporte
-- H → Ajuda
-- X → Sair
+Run custom CMD commands directly
 
-----------------------------------------------------
-Observações
+All accessible via key-based navigation
 
-- O projeto está em constante evolução, sujeito a melhorias e otimizações futuras.
-- Contribuições e sugestões são bem-vindas.
+🧭 Key Navigation
+Key	Module
+R	Network & Connectivity
+S	System & Hardware
+U	Users & Security
+M	Monitoring & Logs
+O	Optimization & Performance
+D	Diagnostic Assistant
+A	Advanced Maintenance
+H	Help & Documentation
+X	Exit
+
+📦 Installation
+bash
+Copiar código
+git clone https://github.com/Mandraquinho/Multi-Tools-Shell
+cd Multi-Tools-Shell
+PowerShell -ExecutionPolicy Bypass -File "MultiToolsShell.ps1"
+Or run the .bat launcher as admin.
+
+👨‍🏫 Developer: Douglas Furlan
+
+🙋‍ Contributor: Carlos Augusto
+
+🔗 Useful Links
+🌐 GitHub Repo: github.com/Mandraquinho/Multi-Tools-Shell
+
+💼 Author’s LinkedIn: Douglas Furlan
+https://www.linkedin.com/in/douglasfurlans/

@@ -1,220 +1,580 @@
-﻿# MultiToolsShell.ps1
-# Ferramenta Multi Tools Shell v2.0 - PowerShell
-# Criado por: Mandraquinho - By Douglas Furlan
-# Data: 29/08/2025
+﻿Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+[System.Windows.Forms.Application]::EnableVisualStyles()
 
-function Show-Credits {
-    Clear-Host
-    Write-Host "================================================" -ForegroundColor Cyan
-    Write-Host "             MultiTools Shell v2.0" -ForegroundColor Cyan
-    Write-Host "             Criado por: Mandraquinho" -ForegroundColor Cyan
-    Write-Host "               By Douglas Furlan" -ForegroundColor Cyan
-    Write-Host "        Data: $(Get-Date -Format 'dd/MM/yyyy')" -ForegroundColor Cyan
-    Write-Host "================================================`n" -ForegroundColor Cyan
-    Start-Sleep -Seconds 2
+# Formulário Principal
+$mainForm = New-Object System.Windows.Forms.Form
+$mainForm.Text = "MultiToolsShell v3.0"
+$mainForm.Size = New-Object System.Drawing.Size(800, 600)
+$mainForm.StartPosition = "CenterScreen"
+$mainForm.BackColor = [System.Drawing.Color]::FromArgb(45, 45, 48)
+$mainForm.ForeColor = [System.Drawing.Color]::White
+$mainForm.Font = New-Object System.Drawing.Font("Segoe UI", 10)
+
+# Categorias
+$categories = @(
+    "Rede e Conectividade",
+    "Sistema e Hardware",
+    "Usuários e Segurança",
+    "Monitoramento e Logs",
+    "Otimização e Performance",
+    "Assistente de Diagnóstico",
+    "Manutenção Avançada",
+    "Ajuda e Documentação",
+    "Sair"
+)
+
+# Botões
+$yPosition = 20
+foreach ($category in $categories) {
+    $btn = New-Object System.Windows.Forms.Button
+    $btn.Text = $category
+    $btn.Size = New-Object System.Drawing.Size(200, 40)
+    $btn.Location = New-Object System.Drawing.Point(20, $yPosition)
+    $btn.BackColor = [System.Drawing.Color]::FromArgb(0, 122, 204)
+    $btn.ForeColor = [System.Drawing.Color]::White
+    $btn.FlatStyle = "Flat"
+    $btn.Add_Click({ Button-Click $this.Text })
+    $mainForm.Controls.Add($btn)
+    $yPosition += 50
 }
 
-function Get-PublicIPAndGeo {
+# Área de Texto para Output
+$outputBox = New-Object System.Windows.Forms.RichTextBox
+$outputBox.Location = New-Object System.Drawing.Point(250, 20)
+$outputBox.Size = New-Object System.Drawing.Size(520, 520)
+$outputBox.BackColor = [System.Drawing.Color]::FromArgb(30, 30, 30)
+$outputBox.ForeColor = [System.Drawing.Color]::LightGreen
+$outputBox.Font = New-Object System.Drawing.Font("Consolas", 9)
+$outputBox.ReadOnly = $true
+$mainForm.Controls.Add($outputBox)
+
+# Label de Status
+$statusLabel = New-Object System.Windows.Forms.Label
+$statusLabel.Location = New-Object System.Drawing.Point(20, 450)
+$statusLabel.Size = New-Object System.Drawing.Size(200, 50)
+$statusLabel.Text = "Pronto..."
+$mainForm.Controls.Add($statusLabel)
+
+# Inicializa o log
+$logFile = "MultiToolsShell_$(Get-Date -Format 'yyyyMMdd_HHmmss').log"
+function Write-Log {
+    param($Message)
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    "$timestamp - $Message" | Out-File -FilePath $logFile -Append
+}
+
+# Função para atualizar status
+function Update-Status {
+    param($text)
+    $statusLabel.Text = $text
+    $mainForm.Refresh()
+}
+
+# Função para mostrar output
+function Write-OutputBox {
+    param($text)
+    $outputBox.AppendText("$text`r`n")
+    $outputBox.ScrollToCaret()
+}
+
+# Verifica privilégios administrativos
+function Test-Admin {
+    $currentUser = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+    return $currentUser.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
+# Função chamada quando botão é clicado
+function Button-Click {
+    param($buttonText)
+    $outputBox.Clear()
+    Update-Status "Executando: $buttonText"
+    
     try {
-        $response = Invoke-RestMethod -Uri "https://ipinfo.io/json" -ErrorAction Stop
-        return @{
-            PublicIP = $response.ip
-            Location = $response.city + ", " + $response.region + ", " + $response.country
+        switch ($buttonText) {
+            "Rede e Conectividade" { Show-NetworkMenu }
+            "Sistema e Hardware" { Get-SystemInfo }
+            "Usuários e Segurança" { Get-UserInfo }
+            "Monitoramento e Logs" { Get-Logs }
+            "Otimização e Performance" { Show-OptimizationMenu }
+            "Assistente de Diagnóstico" { Show-DiagnosticMenu }
+            "Manutenção Avançada" { Show-MaintenanceMenu }
+            "Ajuda e Documentação" { Show-Help }
+            "Sair" { $mainForm.Close() }
         }
     } catch {
-        return @{ PublicIP = "Não disponível"; Location = "Não disponível" }
+        Write-OutputBox "Erro: $_"
+        Write-Log "Erro na execução de ${buttonText}: $_"
+    }
+    Update-Status "Pronto..."
+}
+
+# Funções de Submenu (usando formulários modais)
+function Show-SubMenu {
+    param($title, $options, $actionMap)
+    $subForm = New-Object System.Windows.Forms.Form
+    $subForm.Text = $title
+    $subForm.Size = New-Object System.Drawing.Size(400, 400)
+    $subForm.StartPosition = "CenterParent"
+    $subForm.BackColor = [System.Drawing.Color]::FromArgb(45, 45, 48)
+    $subForm.ForeColor = [System.Drawing.Color]::White
+    $yPosition = 20
+    foreach ($option in $options) {
+        $btn = New-Object System.Windows.Forms.Button
+        $btn.Text = $option
+        $btn.Size = New-Object System.Drawing.Size(350, 40)
+        $btn.Location = New-Object System.Drawing.Point(20, $yPosition)
+        $btn.BackColor = [System.Drawing.Color]::FromArgb(0, 122, 204)
+        $btn.ForeColor = [System.Drawing.Color]::White
+        $btn.FlatStyle = "Flat"
+        $btn.Add_Click({ 
+            $action = $actionMap[$this.Text]
+            if ($action) { &$action }
+            $subForm.Close()
+        })
+        $subForm.Controls.Add($btn)
+        $yPosition += 50
+    }
+    $subForm.ShowDialog()
+}
+
+# Rede e Conectividade
+function Show-NetworkMenu {
+    $options = @(
+        "Mostrar Configuração IP",
+        "Testar Conectividade (Ping google.com)",
+        "Rastrear Rota (Tracert google.com)",
+        "Redefinir TCP/IP",
+        "Redefinir Winsock",
+        "Limpar Cache DNS",
+        "Listar Adaptadores de Rede",
+        "Testar Conectividade (Ping 8.8.8.8)",
+        "Voltar"
+    )
+    $actionMap = @{
+        "Mostrar Configuração IP" = { Get-NetworkInfo }
+        "Testar Conectividade (Ping google.com)" = { Test-PingGoogle }
+        "Rastrear Rota (Tracert google.com)" = { Test-Tracert }
+        "Redefinir TCP/IP" = { Reset-TCPIP }
+        "Redefinir Winsock" = { Reset-Winsock }
+        "Limpar Cache DNS" = { Clear-DNSCache }
+        "Listar Adaptadores de Rede" = { Get-NetAdapters }
+        "Testar Conectividade (Ping 8.8.8.8)" = { Test-PingPublic }
+        "Voltar" = { }
+    }
+    Show-SubMenu "Rede e Conectividade" $options $actionMap
+}
+
+function Get-NetworkInfo {
+    Write-OutputBox "=== CONFIGURAÇÃO DE REDE ==="
+    $ipLocal = (Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.IPAddress -notlike '169.*' -and $_.IPAddress -ne '127.0.0.1' } | Select-Object -First 1 -ExpandProperty IPAddress)
+    Write-OutputBox "IP Local: $ipLocal"
+    try {
+        $publicInfo = Invoke-RestMethod -Uri "https://ipinfo.io/json"
+        Write-OutputBox "IP Público: $($publicInfo.ip)"
+        Write-OutputBox "Geo Local: $($publicInfo.city), $($publicInfo.region), $($publicInfo.country)"
+        Write-Log "IP público obtido: $($publicInfo.ip)"
+    } catch {
+        Write-OutputBox "IP Público: Não disponível"
+        Write-Log "Erro ao obter IP público: $_"
+    }
+    Write-Log "Configuração de rede exibida."
+}
+
+function Test-PingGoogle {
+    Write-OutputBox "=== TESTE DE CONECTIVIDADE (PING GOOGLE.COM) ==="
+    $result = Test-Connection google.com -Count 4 -ErrorAction Stop
+    Write-OutputBox ($result | Format-Table -AutoSize | Out-String)
+    Write-Log "Teste de conectividade (ping google.com) executado."
+}
+
+function Test-Tracert {
+    Write-OutputBox "=== RASTREAMENTO DE ROTA (TRACERT GOOGLE.COM) ==="
+    $result = tracert google.com
+    Write-OutputBox ($result | Out-String)
+    Write-Log "Rastreamento de rota (tracert) executado."
+}
+
+function Reset-TCPIP {
+    if (-not (Test-Admin)) { throw "Permissões administrativas necessárias." }
+    netsh int ip reset
+    Write-OutputBox "TCP/IP redefinido. Reinicie o computador."
+    Write-Log "TCP/IP redefinido."
+}
+
+function Reset-Winsock {
+    if (-not (Test-Admin)) { throw "Permissões administrativas necessárias." }
+    netsh winsock reset
+    Write-OutputBox "Winsock redefinido. Reinicie o computador."
+    Write-Log "Winsock redefinido."
+}
+
+function Clear-DNSCache {
+    ipconfig /flushdns
+    Write-OutputBox "Cache DNS limpo."
+    Write-Log "Cache DNS limpo."
+}
+
+function Get-NetAdapters {
+    Write-OutputBox "=== ADAPTADORES DE REDE ==="
+    $adapters = Get-NetAdapter | Select-Object Name, Status, MacAddress
+    Write-OutputBox ($adapters | Format-Table -AutoSize | Out-String)
+    Write-Log "Adaptadores de rede listados."
+}
+
+function Test-PingPublic {
+    Write-OutputBox "=== TESTE DE CONECTIVIDADE (PING 8.8.8.8) ==="
+    $result = Test-Connection 8.8.8.8 -Count 5 -ErrorAction Stop
+    Write-OutputBox ($result | Format-Table -AutoSize | Out-String)
+    Write-Log "Teste de conectividade (ping 8.8.8.8) executado."
+}
+
+# Sistema e Hardware
+function Get-SystemInfo {
+    Write-OutputBox "=== INFORMAÇÕES DO SISTEMA ==="
+    Write-OutputBox "Computador: $env:COMPUTERNAME"
+    Write-OutputBox "Usuário: $env:USERNAME"
+    Write-OutputBox "SO: $((Get-CimInstance Win32_OperatingSystem).Caption)"
+    Write-OutputBox "Processador: $((Get-CimInstance Win32_Processor).Name)"
+    $memGB = [math]::Round(((Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory / 1GB), 2)
+    Write-OutputBox "Memória Total: $memGB GB"
+    $ramFreeMB = [math]::Round(((Get-CimInstance Win32_OperatingSystem).FreePhysicalMemory / 1KB), 2)
+    Write-OutputBox "RAM Livre: $ramFreeMB MB"
+    $disk = Get-PSDrive C -ErrorAction SilentlyContinue
+    if ($disk) {
+        $freeGB = [math]::Round(($disk.Free / 1GB), 2)
+        $totalGB = [math]::Round(($disk.Used + $disk.Free) / 1GB, 2)
+        Write-OutputBox "Disco C: $freeGB GB livres / $totalGB GB total"
+    }
+    Write-Log "Informações de sistema e hardware exibidas."
+}
+
+# Usuários e Segurança
+function Get-UserInfo {
+    Write-OutputBox "=== USUÁRIOS LOCAIS ==="
+    $users = Get-LocalUser | Select-Object Name, Enabled, @{Name="LastLogon"; Expression={if($_.LastLogon) {$_.LastLogon.ToString("dd/MM/yyyy")} else {"Nunca"}}}
+    foreach ($user in $users) {
+        $status = if ($user.Enabled) {"Ativo"} else {"Desativado"}
+        Write-OutputBox "$($user.Name) - $status - Último logon: $($user.LastLogon)"
+    }
+    Write-Log "Lista de usuários locais exibida."
+}
+
+# Monitoramento e Logs
+function Get-Logs {
+    Write-OutputBox "=== ÚLTIMOS EVENTOS DO SISTEMA ==="
+    $events = Get-EventLog -LogName System -Newest 5 -ErrorAction Stop
+    foreach ($event in $events) {
+        Write-OutputBox "$($event.TimeGenerated.ToString('dd/MM HH:mm')) - $($event.EntryType) - $($event.Source)"
+    }
+    Write-Log "Últimos eventos do sistema exibidos."
+}
+
+# Otimização e Performance
+function Show-OptimizationMenu {
+    $options = @(
+        "Limpar Arquivos Temporários",
+        "Limpar Cache de Navegadores",
+        "Listar Programas na Inicialização",
+        "Voltar"
+    )
+    $actionMap = @{
+        "Limpar Arquivos Temporários" = { Clear-TempFiles }
+        "Limpar Cache de Navegadores" = { Clear-BrowserCache }
+        "Listar Programas na Inicialização" = { Get-StartupPrograms }
+        "Voltar" = { }
+    }
+    Show-SubMenu "Otimização e Performance" $options $actionMap
+}
+
+function Clear-TempFiles {
+    $paths = @("$env:TEMP\*", "$env:SystemRoot\Prefetch\*")
+    foreach ($p in $paths) { Remove-Item -Path $p -Recurse -Force -ErrorAction SilentlyContinue }
+    Write-OutputBox "Arquivos temporários limpos."
+    Write-Log "Arquivos temporários limpos."
+}
+
+function Clear-BrowserCache {
+    $chromeCache = "$env:LOCALAPPDATA\Google\Chrome\User Data\Default\Cache\*"
+    $edgeCache = "$env:LOCALAPPDATA\Microsoft\Edge\User Data\Default\Cache\*"
+    Remove-Item $chromeCache,$edgeCache -Recurse -Force -ErrorAction SilentlyContinue
+    Write-OutputBox "Cache do Chrome/Edge limpo."
+    Write-Log "Cache do Chrome/Edge limpo."
+}
+
+function Get-StartupPrograms {
+    Write-OutputBox "=== PROGRAMAS NA INICIALIZAÇÃO ==="
+    $startups = Get-CimInstance Win32_StartupCommand | Select-Object Name, Command, Location
+    Write-OutputBox ($startups | Format-Table -AutoSize | Out-String)
+    Write-Log "Programas na inicialização listados."
+}
+
+# Assistente de Diagnóstico
+function Show-DiagnosticMenu {
+    $options = @(
+        "Verificar Disco (CHKDSK)",
+        "Verificar Arquivos do Sistema (SFC)",
+        "Diagnóstico de Memória",
+        "Verificar Integridade da Imagem (DISM)",
+        "Otimizar Disco (TRIM para SSD ou Desfragmentação para HDD)",
+        "Testar Velocidade do Disco (WinSAT)",
+        "Relatório de Energia",
+        "Logs de Aplicativos",
+        "Status Licença do Windows",
+        "Voltar"
+    )
+    $actionMap = @{
+        "Verificar Disco (CHKDSK)" = { Run-CHKDSK }
+        "Verificar Arquivos do Sistema (SFC)" = { Run-SFC }
+        "Diagnóstico de Memória" = { Run-MemoryDiagnostic }
+        "Verificar Integridade da Imagem (DISM)" = { Run-DISM }
+        "Otimizar Disco (TRIM para SSD ou Desfragmentação para HDD)" = { Optimize-Disk }
+        "Testar Velocidade do Disco (WinSAT)" = { Run-WinSAT }
+        "Relatório de Energia" = { Run-PowerReport }
+        "Logs de Aplicativos" = { Get-AppLogs }
+        "Status Licença do Windows" = { Get-LicenseStatus }
+        "Voltar" = { }
+    }
+    Show-SubMenu "Assistente de Diagnóstico" $options $actionMap
+}
+
+function Run-CHKDSK {
+    if (-not (Test-Admin)) { throw "Permissões administrativas necessárias." }
+    $result = chkdsk C: /f
+    Write-OutputBox ($result | Out-String)
+    Write-Log "CHKDSK executado."
+}
+
+function Run-SFC {
+    if (-not (Test-Admin)) { throw "Permissões administrativas necessárias." }
+    $result = sfc /scannow
+    Write-OutputBox ($result | Out-String)
+    Write-Log "SFC executado."
+}
+
+function Run-MemoryDiagnostic {
+    Start-Process mdsched
+    Write-OutputBox "Diagnóstico de memória iniciado."
+    Write-Log "Diagnóstico de memória iniciado."
+}
+
+function Run-DISM {
+    if (-not (Test-Admin)) { throw "Permissões administrativas necessárias." }
+    $result = DISM /Online /Cleanup-Image /ScanHealth
+    Write-OutputBox ($result | Out-String)
+    Write-Log "DISM ScanHealth executado."
+}
+
+function Optimize-Disk {
+    if (-not (Test-Admin)) { throw "Permissões administrativas necessárias." }
+    $disk = Get-PhysicalDisk | Where-Object { $_.DeviceID -eq (Get-Partition -DriveLetter C).DiskNumber }
+    if ($disk.MediaType -eq "SSD") {
+        Write-OutputBox "Disco C: é um SSD. Executando TRIM..."
+        $result = defrag C: /L
+        Write-OutputBox ($result | Out-String)
+        Write-OutputBox "TRIM executado com sucesso."
+        Write-Log "TRIM executado no disco C: (SSD)."
+    } else {
+        Write-OutputBox "Disco C: é um HDD. Executando desfragmentação..."
+        $result = defrag C:
+        Write-OutputBox ($result | Out-String)
+        Write-OutputBox "Desfragmentação concluída."
+        Write-Log "Desfragmentação executada no disco C: (HDD)."
     }
 }
 
-function Show-SystemStatus {
-    Clear-Host
-    Write-Host "==================== STATUS DO SISTEMA ====================" -ForegroundColor Cyan
-    Write-Host "Computador : $env:COMPUTERNAME"
-    Write-Host "Usuário    : $env:USERNAME"
-    
-    $ipLocal = (Get-NetIPAddress -AddressFamily IPv4 | Where-Object {
-        $_.IPAddress -notlike '169.*' -and $_.IPAddress -ne '127.0.0.1'
-    } | Select-Object -First 1 -ExpandProperty IPAddress)
-    if (-not $ipLocal) { $ipLocal = "Não disponível" }
-    Write-Host "IP Local   : $ipLocal"
-
-    $publicInfo = Get-PublicIPAndGeo
-    Write-Host "IP Público : $($publicInfo.PublicIP)"
-    Write-Host "Geo Local  : $($publicInfo.Location)"
-
-    Write-Host "Sistema    : $((Get-CimInstance Win32_OperatingSystem).Caption)"
-    $ramFreeMB = [math]::Round(((Get-CimInstance Win32_OperatingSystem).FreePhysicalMemory / 1KB),2)
-    Write-Host "RAM Livre  : $ramFreeMB MB"
-
-    $disk = Get-PSDrive C
-    $freeGB = [math]::Round(($disk.Free/1GB),2)
-    $totalGB = [math]::Round(($disk.Used + $disk.Free)/1GB,2)
-    Write-Host "Disco C:   $freeGB GB livres / $totalGB GB total"
-
-    Write-Host "Data/Hora  : $(Get-Date -Format 'dd/MM/yyyy HH:mm:ss')"
-    Write-Host "=============================================================`n"
+function Run-WinSAT {
+    if (-not (Test-Admin)) { throw "Permissões administrativas necessárias." }
+    $result = winsat disk
+    Write-OutputBox ($result | Out-String)
+    Write-Log "Teste de velocidade do disco (WinSAT) executado."
 }
 
-function Show-Menu {
-    Write-Host "===================== MENU PRINCIPAL =======================" -ForegroundColor Green
-    Write-Host "[R] Rede e Conectividade"
-    Write-Host "[S] Sistema e Hardware"
-    Write-Host "[U] Usuários e Segurança"
-    Write-Host "[M] Monitoramento e Logs"
-    Write-Host "[O] Otimização e Performance"
-    Write-Host "[A] Assistente de Diagnóstico"
-    Write-Host "[H] Ajuda e Documentação"
-    Write-Host "[X] Sair"
-    Write-Host "=============================================================`n"
-    Write-Host "Digite a letra da categoria desejada:" -NoNewline
+function Run-PowerReport {
+    if (-not (Test-Admin)) { throw "Permissões administrativas necessárias." }
+    powercfg /energy
+    Write-OutputBox "Relatório gerado em C:\Windows\System32\energy-report.html"
+    Write-Log "Relatório de energia gerado."
 }
 
-# ================== MÓDULOS ==================
+function Get-AppLogs {
+    Write-OutputBox "=== LOGS DE APLICATIVOS ==="
+    $events = Get-EventLog -LogName Application -Newest 10
+    Write-OutputBox ($events | Format-Table TimeGenerated, EntryType, Source, Message -AutoSize | Out-String)
+    Write-Log "Logs de aplicativos exibidos."
+}
 
-function Rede-Conectividade {
-    Clear-Host
-    Write-Host "=== Rede e Conectividade ===`n" -ForegroundColor Yellow
-    Write-Host "1. Mostrar Configuração IP"
-    Write-Host "2. Testar Conectividade (Ping google.com)"
-    Write-Host "3. Rastrear rota (Tracert google.com)"
-    Write-Host "4. Redefinir TCP/IP"
-    Write-Host "5. Redefinir Winsock"
-    Write-Host "6. Limpar Cache DNS"
-    Write-Host "7. Listar Adaptadores de Rede"
-    Write-Host "0. Voltar"
-    Write-Host "`nEscolha uma opção:" -NoNewline
+function Get-LicenseStatus {
+    $result = slmgr /xpr
+    Write-OutputBox ($result | Out-String)
+    Write-Log "Status da licença do Windows exibido."
+}
 
-    $input = Read-Host
-    switch ($input) {
-        '1' { ipconfig /all; Pause; Rede-Conectividade }
-        '2' { Test-Connection google.com -Count 4; Pause; Rede-Conectividade }
-        '3' { tracert google.com; Pause; Rede-Conectividade }
-        '4' { netsh int ip reset; Write-Host "`nReinicie o computador."; Pause; Rede-Conectividade }
-        '5' { netsh winsock reset; Write-Host "`nReinicie o computador."; Pause; Rede-Conectividade }
-        '6' { ipconfig /flushdns; Write-Host "`nCache DNS limpo."; Pause; Rede-Conectividade }
-        '7' { Get-NetAdapter | Format-Table Name, Status, MacAddress; Pause; Rede-Conectividade }
-        '0' { return }
-        default { Write-Host "Opção inválida!" -ForegroundColor Red; Start-Sleep -Seconds 1.5; Rede-Conectividade }
+# Manutenção Avançada
+function Show-MaintenanceMenu {
+    $options = @(
+        "Limpar Arquivos Temporários (CleanMgr)",
+        "Restaurar Sistema",
+        "Gerenciar Processos (Task Manager)",
+        "Backup de Drivers",
+        "Verificar Atualizações do Windows",
+        "Gerenciar Usuários Locais",
+        "Ativar/Desativar Firewall",
+        "Criar Ponto de Restauração",
+        "Executar Comando Personalizado (CMD)",
+        "Atualizar Todos os Programas (Winget)",
+        "Voltar"
+    )
+    $actionMap = @{
+        "Limpar Arquivos Temporários (CleanMgr)" = { Run-CleanMgr }
+        "Restaurar Sistema" = { Run-Restore }
+        "Gerenciar Processos (Task Manager)" = { Run-TaskManager }
+        "Backup de Drivers" = { Backup-Drivers }
+        "Verificar Atualizações do Windows" = { Check-WindowsUpdates }
+        "Gerenciar Usuários Locais" = { Run-UserManager }
+        "Ativar/Desativar Firewall" = { Manage-Firewall }
+        "Criar Ponto de Restauração" = { Create-RestorePoint }
+        "Executar Comando Personalizado (CMD)" = { Run-CustomCMD }
+        "Atualizar Todos os Programas (Winget)" = { Update-Winget }
+        "Voltar" = { }
     }
+    Show-SubMenu "Manutenção Avançada" $options $actionMap
 }
 
-function Sistema-Hardware {
-    Clear-Host
-    Write-Host "=== Sistema e Hardware ===`n" -ForegroundColor Yellow
-    Write-Host "SO: $((Get-CimInstance Win32_OperatingSystem).Caption)"
-    Write-Host "Versão: $((Get-CimInstance Win32_OperatingSystem).Version)"
-    Write-Host "Processador: $((Get-CimInstance Win32_Processor).Name)"
-    $memTotalMB = [math]::Round(((Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory / 1MB),2)
-    Write-Host "Memória Total (MB): $memTotalMB"
-    $freeDiskGB = [math]::Round((Get-PSDrive C).Free/1GB,2)
-    Write-Host "Espaço livre em C: $freeDiskGB GB"
-    Pause
+function Run-CleanMgr {
+    Start-Process cleanmgr -ArgumentList "/sagerun:1"
+    Write-OutputBox "Limpeza de arquivos temporários iniciada."
+    Write-Log "Limpeza de arquivos temporários (CleanMgr) iniciada."
 }
 
-function Usuarios-Seguranca {
-    Clear-Host
-    Write-Host "=== Usuários e Segurança ===`n" -ForegroundColor Yellow
-    Get-LocalUser | Format-Table Name, Enabled, LastLogon
-    Pause
+function Run-Restore {
+    Start-Process rstrui
+    Write-OutputBox "Restauração do sistema iniciada."
+    Write-Log "Restauração do sistema iniciada."
 }
 
-function Monitoramento-Logs {
-    Clear-Host
-    Write-Host "=== Monitoramento e Logs ===`n" -ForegroundColor Yellow
-    Write-Host "Últimos eventos do sistema:`n"
-    Get-EventLog -LogName System -Newest 10 | Format-Table TimeGenerated, EntryType, Source, Message -AutoSize
-    Pause
+function Run-TaskManager {
+    Start-Process taskmgr
+    Write-OutputBox "Gerenciador de tarefas iniciado."
+    Write-Log "Gerenciador de tarefas iniciado."
 }
 
-function Otimizacao-Performance {
-    Clear-Host
-    Write-Host "=== Otimização e Performance ===`n" -ForegroundColor Yellow
-    Write-Host "1. Limpar arquivos temporários"
-    Write-Host "2. Limpar cache navegador (Edge/Chrome)"
-    Write-Host "3. Listar programas na inicialização"
-    Write-Host "0. Voltar"
-    $opt = Read-Host
-    switch ($opt) {
-        '1' {
-            $paths = @("$env:TEMP\*", "$env:SystemRoot\Prefetch\*")
-            foreach ($p in $paths) { Remove-Item -Path $p -Recurse -Force -ErrorAction SilentlyContinue }
-            Write-Host "Arquivos temporários limpos."; Pause; Otimizacao-Performance
-        }
-        '2' {
-            $chromeCache = "$env:LOCALAPPDATA\Google\Chrome\User Data\Default\Cache\*"
-            $edgeCache = "$env:LOCALAPPDATA\Microsoft\Edge\User Data\Default\Cache\*"
-            Remove-Item $chromeCache,$edgeCache -Recurse -Force -ErrorAction SilentlyContinue
-            Write-Host "Cache do Chrome/Edge limpo."; Pause; Otimizacao-Performance
-        }
-        '3' {
-            Get-CimInstance Win32_StartupCommand | Select-Object Name, Command, Location | Format-Table -AutoSize
-            Pause; Otimizacao-Performance
-        }
-        '0' { return }
-        default { Write-Host "Opção inválida!"; Start-Sleep 1; Otimizacao-Performance }
-    }
+function Backup-Drivers {
+    if (-not (Test-Admin)) { throw "Permissões administrativas necessárias." }
+    Write-OutputBox "Iniciando backup de drivers com pnputil..."
+    Start-Process pnputil -ArgumentList "/export-driver * $env:USERPROFILE\Desktop\DriverBackup"
+    Write-OutputBox "Drivers exportados para $env:USERPROFILE\Desktop\DriverBackup"
+    Write-Log "Backup de drivers executado."
 }
 
-function Assistente-Diagnostico {
-    Clear-Host
-    Write-Host "=== Assistente de Diagnóstico ===`n" -ForegroundColor Yellow
-    Write-Host "1. Verificar Disco (CHKDSK)"
-    Write-Host "2. Verificar Arquivos do Sistema (SFC)"
-    Write-Host "3. Diagnóstico de Memória"
-    Write-Host "4. Verificar Integridade da Imagem (DISM)"
-    Write-Host "5. Desfragmentar Disco"
-    Write-Host "6. Testar Velocidade do Disco (WinSAT)"
-    Write-Host "7. Relatório de Energia"
-    Write-Host "8. Logs de Aplicativos"
-    Write-Host "9. Status Licença do Windows"
-    Write-Host "0. Voltar"
-    $opt = Read-Host
-    switch ($opt) {
-        '1' { chkdsk C: /f; Pause; Assistente-Diagnostico }
-        '2' { sfc /scannow; Pause; Assistente-Diagnostico }
-        '3' { mdsched; Pause; Assistente-Diagnostico }
-        '4' { DISM /Online /Cleanup-Image /ScanHealth; Pause; Assistente-Diagnostico }
-        '5' { defrag C:; Pause; Assistente-Diagnostico }
-        '6' { winsat disk; Pause; Assistente-Diagnostico }
-        '7' { powercfg /energy; Write-Host "Relatório gerado em C:\Windows\System32\energy-report.html"; Pause; Assistente-Diagnostico }
-        '8' { Get-EventLog -LogName Application -Newest 10 | Format-Table TimeGenerated, EntryType, Source, Message -AutoSize; Pause; Assistente-Diagnostico }
-        '9' { slmgr /xpr; Pause; Assistente-Diagnostico }
-        '0' { return }
-        default { Write-Host "Opção inválida!"; Start-Sleep 1; Assistente-Diagnostico }
-    }
+function Check-WindowsUpdates {
+    if (-not (Test-Admin)) { throw "Permissões administrativas necessárias." }
+    Write-OutputBox "Verificando atualizações do Windows..."
+    $result = Get-WindowsUpdateLog
+    Write-OutputBox ($result | Out-String)
+    Write-Log "Log de atualizações do Windows gerado."
 }
 
+function Run-UserManager {
+    Start-Process lusrmgr.msc
+    Write-OutputBox "Gerenciador de usuários locais iniciado."
+    Write-Log "Gerenciador de usuários locais iniciado."
+}
+
+function Manage-Firewall {
+    if (-not (Test-Admin)) { throw "Permissões administrativas necessárias." }
+    $subForm = New-Object System.Windows.Forms.Form
+    $subForm.Text = "Gerenciar Firewall"
+    $subForm.Size = New-Object System.Drawing.Size(300, 200)
+    $subForm.StartPosition = "CenterParent"
+    $subForm.BackColor = [System.Drawing.Color]::FromArgb(45, 45, 48)
+    $subForm.ForeColor = [System.Drawing.Color]::White
+
+    $btnEnable = New-Object System.Windows.Forms.Button
+    $btnEnable.Text = "Ativar Firewall"
+    $btnEnable.Size = New-Object System.Drawing.Size(250, 40)
+    $btnEnable.Location = New-Object System.Drawing.Point(20, 20)
+    $btnEnable.BackColor = [System.Drawing.Color]::FromArgb(0, 122, 204)
+    $btnEnable.ForeColor = [System.Drawing.Color]::White
+    $btnEnable.FlatStyle = "Flat"
+    $btnEnable.Add_Click({
+        netsh advfirewall set allprofiles state on
+        Write-OutputBox "Firewall ativado."
+        Write-Log "Firewall ativado."
+        $subForm.Close()
+    })
+    $subForm.Controls.Add($btnEnable)
+
+    $btnDisable = New-Object System.Windows.Forms.Button
+    $btnDisable.Text = "Desativar Firewall"
+    $btnDisable.Size = New-Object System.Drawing.Size(250, 40)
+    $btnDisable.Location = New-Object System.Drawing.Point(20, 70)
+    $btnDisable.BackColor = [System.Drawing.Color]::FromArgb(0, 122, 204)
+    $btnDisable.ForeColor = [System.Drawing.Color]::White
+    $btnDisable.FlatStyle = "Flat"
+    $btnDisable.Add_Click({
+        netsh advfirewall set allprofiles state off
+        Write-OutputBox "Firewall desativado."
+        Write-Log "Firewall desativado."
+        $subForm.Close()
+    })
+    $subForm.Controls.Add($btnDisable)
+
+    $btnCancel = New-Object System.Windows.Forms.Button
+    $btnCancel.Text = "Cancelar"
+    $btnCancel.Size = New-Object System.Drawing.Size(250, 40)
+    $btnCancel.Location = New-Object System.Drawing.Point(20, 120)
+    $btnCancel.BackColor = [System.Drawing.Color]::FromArgb(0, 122, 204)
+    $btnCancel.ForeColor = [System.Drawing.Color]::White
+    $btnCancel.FlatStyle = "Flat"
+    $btnCancel.Add_Click({ $subForm.Close() })
+    $subForm.Controls.Add($btnCancel)
+
+    $subForm.ShowDialog()
+}
+
+function Create-RestorePoint {
+    if (-not (Test-Admin)) { throw "Permissões administrativas necessárias." }
+    Checkpoint-Computer -Description "Ponto de Restauração Manual"
+    Write-OutputBox "Ponto de restauração criado."
+    Write-Log "Ponto de restauração criado."
+}
+
+function Run-CustomCMD {
+    Start-Process cmd
+    Write-OutputBox "Prompt de comando personalizado iniciado."
+    Write-Log "Prompt de comando personalizado iniciado."
+}
+
+function Update-Winget {
+    if (-not (Test-Admin)) { throw "Permissões administrativas necessárias." }
+    $result = winget update --all
+    Write-OutputBox ($result | Out-String)
+    Write-Log "Atualização de programas via winget executada."
+}
+
+# Ajuda e Documentação
 function Show-Help {
-    Clear-Host
-    Write-Host "=== Ajuda e Documentação ===`n" -ForegroundColor Yellow
-    Write-Host "Use as letras indicadas para navegar entre as categorias."
-    Write-Host "Exemplo: Digite 'R' para Rede e Conectividade."
-    Write-Host "Pressione X para sair."
-    Pause
+    Write-OutputBox "=== AJUDA E DOCUMENTAÇÃO ==="
+    Write-OutputBox "Ferramenta de administração e suporte técnico para sistemas Windows."
+    Write-OutputBox "Selecione uma categoria à esquerda para executar ações."
+    Write-OutputBox "Nota: A otimização de disco usa TRIM para SSDs e desfragmentação para HDDs."
+    Write-OutputBox "Data: $(Get-Date -Format 'dd/MM/yyyy')"
+    Write-Log "Ajuda exibida."
 }
 
-function Pause {
-    Write-Host "`nPressione Enter para continuar..." -NoNewline
-    [void][System.Console]::ReadKey($true)
+# Verifica privilégios administrativos
+if (-not (Test-Admin)) {
+    [System.Windows.Forms.MessageBox]::Show("Este programa requer privilégios administrativos. Execute como administrador.", "Erro", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Error)
+    Write-Log "Script encerrado: privilégios administrativos insuficientes."
+    exit
 }
 
-# ================== LOOP PRINCIPAL ==================
-Show-Credits
+# Iniciar a interface
+Write-OutputBox "=== MULTITOOLSSHELL v3.0 ==="
+Write-OutputBox "Data: $(Get-Date -Format 'dd/MM/yyyy HH:mm:ss')"
+Write-OutputBox "=================================`n"
+Write-OutputBox "Selecione uma opção no menu à esquerda"
+Write-Log "Script iniciado."
 
-while ($true) {
-    Show-SystemStatus
-    Show-Menu
-    $choice = Read-Host
-    switch ($choice.ToUpper()) {
-        'R' { Rede-Conectividade }
-        'S' { Sistema-Hardware }
-        'U' { Usuarios-Seguranca }
-        'M' { Monitoramento-Logs }
-        'O' { Otimizacao-Performance }
-        'A' { Assistente-Diagnostico }
-        'H' { Show-Help }
-        'X' { break }
-        default { Write-Host "Opção inválida!"; Start-Sleep 2 }
-    }
-}
-Write-Host "`nSaindo do programa. Até mais!" -ForegroundColor Green
+$mainForm.ShowDialog()
