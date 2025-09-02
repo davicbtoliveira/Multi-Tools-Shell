@@ -2,7 +2,6 @@
 [![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-blue?logo=powershell)](https://docs.microsoft.com/powershell/)
 [![Shell Script](https://img.shields.io/badge/Shell-Bash%20%7C%20Sh-lightgrey?logo=gnu-bash)](https://www.gnu.org/software/bash/)
 [![Windows](https://img.shields.io/badge/Windows-10%2F11_or_Server_2016%2B-green?logo=windows)](https://www.microsoft.com/windows/)
-[![GitHub](https://img.shields.io/badge/GitHub-Version-Control-black?logo=github)](https://github.com/)
 ---
 🇧🇷 **Descrição (PT-BR)**
 O **Multi Tools Shell** é uma poderosa ferramenta desenvolvida em **PowerShell** com o objetivo de **simplificar, acelerar e centralizar** atividades de administração em sistemas **Windows**.
