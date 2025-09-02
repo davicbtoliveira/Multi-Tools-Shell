@@ -86,29 +86,29 @@ A	Manutenção Avançada
 H	Ajuda & Documentação
 X	Sair`
 
-🤝 Contribuições
+## 🤝 Contribuições
 Contribuições são bem-vindas!
 Abra uma issue ou envie um pull request com melhorias, correções ou novos recursos.
 
-👨‍🏫 Desenvolvido por: Douglas Furlan
+##👨‍🏫 Desenvolvido por: Douglas Furlan
 
 🙋‍ Contribuições: Carlos Augusto
 
-🔗 Links Oficiais
+##🔗 Links Oficiais
 
 🧾 Repositório GitHub: github.com/Mandraquinho/Multi-Tools-Shell
 
 💼 Author’s LinkedIn : https://www.linkedin.com/in/douglasfurlans/
 
 
-🌍 English Version
+## **🌍 English Version**
 🇺🇸 Description (EN)
 Multi Tools Shell is a powerful graphical PowerShell utility designed to simplify, accelerate, and centralize Windows system administration tasks.
 With an interactive command-line menu, it was built for IT technicians, analysts, and power users looking for an all-in-one interface to perform diagnostics, cleanups, maintenance, and performance tuning.
 
 Version 3.0 introduces major usability improvements, new integrated modules, winget software updating support, and driver backup tools.
 
-🔧 Key Features
+##🔧 Key Features
 Quick network, system, and hardware diagnostics
 
 Detailed info on the machine and user session
@@ -129,7 +129,7 @@ Run custom CMD commands directly
 
 All accessible via key-based navigation
 
-`📦 Installation
+##`📦 Installation
 bash
 Copiar código
 git clone https://github.com/Mandraquinho/Multi-Tools-Shell
@@ -137,7 +137,7 @@ cd Multi-Tools-Shell
 PowerShell -ExecutionPolicy Bypass -File "MultiToolsShell.ps1"
 Or run the .bat launcher as admin.`
 
-`🧭 Key Navigation
+##`🧭 Key Navigation
 Key	Module
 R	Network & Connectivity
 S	System & Hardware
