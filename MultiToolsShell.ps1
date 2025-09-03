@@ -144,6 +144,7 @@ function Show-NetworkMenu {
         "Mostrar Configuração IP",
         "Testar Conectividade (Ping google.com)",
         "Rastrear Rota (Tracert google.com)",
+        "Testar Rede EBA (Ping 10.67.6.32)",
         "Redefinir TCP/IP",
         "Redefinir Winsock",
         "Limpar Cache DNS",
@@ -155,6 +156,7 @@ function Show-NetworkMenu {
         "Mostrar Configuração IP" = { Get-NetworkInfo }
         "Testar Conectividade (Ping google.com)" = { Test-PingGoogle }
         "Rastrear Rota (Tracert google.com)" = { Test-Tracert }
+        "Testar Rede EBA (Ping 10.67.6.32)" = { Test-Rede }
         "Redefinir TCP/IP" = { Reset-TCPIP }
         "Redefinir Winsock" = { Reset-Winsock }
         "Limpar Cache DNS" = { Clear-DNSCache }
@@ -193,6 +195,13 @@ function Test-Tracert {
     $result = tracert google.com
     Write-OutputBox ($result | Out-String)
     Write-Log "Rastreamento de rota (tracert) executado."
+}
+
+function Test-Rede {
+    Write-OutputBox "=== TESTE DE REDE EBA (PING 10.67.6.32) ==="
+    $result = Test-Connection 10.67.6.32 -Count 4 -ErrorAction Stop
+    Write-OutputBox ($result | Format-Table -AutoSize | Out-String)
+    Write-Log "Teste de rede (ping 10.67.6.32) executado."
 }
 
 function Reset-TCPIP {
